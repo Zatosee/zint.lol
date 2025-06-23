@@ -140,8 +140,8 @@ export default function Home() {
           <div
             style={{
                 display: "flex",
-                gap: 80,               // plus d’espace entre blocs
-                maxWidth: 1400,
+                gap: 40,               // plus d’espace entre blocs
+                maxWidth: 900,
                 width: "100%",
                 justifyContent: "center",
                 margin: "0 auto",      // centre horizontalement le container
@@ -150,7 +150,7 @@ export default function Home() {
             <div
                 style={{
                 flex: 1,
-                height: 550,         // blocs plus grands
+                height: 220,         // blocs plus grands
                 backgroundColor: "rgb(79, 25, 36)",
                 borderRadius: 10,
                 }}
@@ -158,7 +158,7 @@ export default function Home() {
             <div
                 style={{
                 flex: 1,
-                height: 550,
+                height: 220,
                 backgroundColor: "rgb(79, 25, 36)",
                 borderRadius: 10,
                 }}
@@ -166,7 +166,7 @@ export default function Home() {
             <div
                 style={{
                 flex: 1,
-                height: 550,
+                height: 220,
                 backgroundColor: "rgb(79, 25, 36)",
                 borderRadius: 10,
                 }}
