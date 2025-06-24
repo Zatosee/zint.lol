@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 import yunara from "../assets/yunara.png";
 import logo from "../assets/logo.png";
 import { AiOutlineBarChart } from "react-icons/ai";
@@ -19,12 +19,12 @@ export default function Home() {
   }, []);
 
   const isMobile = windowWidth < 768;
-
-  const logoWidth = isMobile ? 80 : 256; // Largeur du logo
-  const fontSize = isMobile ? 48 : 196;
+  const navigate = useNavigate();
+  const logoWidth = isMobile ? 80 : 200;
+  const fontSize = isMobile ? 48 : 156;
   const blockHeight = isMobile ? 150 : 220;
-  const searchHeight = isMobile ? 40 : 100;
-  const gapBlocks = isMobile ? 20 : 200;
+  const searchHeight = isMobile ? 40 : 80;
+  const gapBlocks = isMobile ? 20 : 80;
   const paddingOverlay = isMobile ? "20px 10px" : "40px 20px";
 
   const handleSearch = () => {
@@ -110,126 +110,126 @@ export default function Home() {
 
           {/* Barre de recherche */}
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "rgba(79, 25, 36, 0.85)",
-              borderRadius: 12,
-              overflow: "hidden",
-              maxWidth: 1200,
-              width: "100%",
-              height: searchHeight,
-              marginBottom: 40,
-              boxShadow: "0 4px 10px rgba(79, 25, 36, 0.6)",
-            }}
-          >
-            {/* Bloc Région */}
-            <div
-              style={{
-                backgroundColor: "rgb(225, 198, 153)",
-                color: "rgb(79, 25, 36)",
-                fontWeight: "700",
-                padding: isMobile ? "0 16px" : "0 30px", // plus large en desktop
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                userSelect: "none",
-                fontFamily: "anton, sans-serif",
-                fontSize: isMobile ? 16 : 28, // plus gros en desktop
-                borderTopLeftRadius: 12,
-                borderBottomLeftRadius: 12,
-                borderRight: "1px solid rgba(79, 25, 36, 0.3)",
-                transition: "background-color 0.3s ease",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "rgb(255, 220, 180)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = "rgb(225, 198, 153)")
-              }
-            >
-              EUW
-            </div>
+        style={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "rgba(79, 25, 36, 0.85)",
+          borderRadius: 12,
+          overflow: "hidden",
+          maxWidth: 1200,
+          width: "100%",
+          height: searchHeight,
+          marginBottom: 40,
+          boxShadow: "0 4px 10px rgba(79, 25, 36, 0.6)",
+        }}
+      >
+        {/* Bloc Région */}
+        <div
+          style={{
+            backgroundColor: "rgb(225, 198, 153)",
+            color: "rgb(79, 25, 36)",
+            fontWeight: "700",
+            padding: isMobile ? "0 16px" : "0 30px", // plus large en desktop
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            cursor: "pointer",
+            userSelect: "none",
+            fontFamily: "anton, sans-serif",
+            fontSize: isMobile ? 16 : 28, // plus gros en desktop
+            borderTopLeftRadius: 12,
+            borderBottomLeftRadius: 12,
+            borderRight: "1px solid rgba(79, 25, 36, 0.3)",
+            transition: "background-color 0.3s ease",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor = "rgb(255, 220, 180)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.backgroundColor = "rgb(225, 198, 153)")
+          }
+        >
+          EUW
+        </div>
 
-            {/* Input texte */}
-            <input
-              type="text"
-              value={pseudo}
-              onChange={(e) => setPseudo(e.target.value)}
-              placeholder="Rechercher un joueur"
-              style={{
-                flex: 1,
-                padding: isMobile ? "0 16px" : "0 30px",
-                border: "none",
-                fontSize: isMobile ? 18 : 28, // plus grand en desktop
-                outline: "none",
-                height: "100%",
-                color: "#fff",
-                backgroundColor: "transparent",
-                fontFamily: "anton, sans-serif",
-              }}
-            />
+        {/* Input texte */}
+        <input
+          type="text"
+          value={pseudo}
+          onChange={(e) => setPseudo(e.target.value)}
+          placeholder="Rechercher un joueur"
+          style={{
+            flex: 1,
+            padding: isMobile ? "0 16px" : "0 30px",
+            border: "none",
+            fontSize: isMobile ? 18 : 28, // plus grand en desktop
+            outline: "none",
+            height: "100%",
+            color: "#fff",
+            backgroundColor: "transparent",
+            fontFamily: "anton, sans-serif",
+          }}
+        />
 
-            {/* Bouton recherche */}
-            <button
-              onClick={handleSearch}
-              style={{
-                backgroundColor: "rgb(225, 198, 153)",
-                border: "none",
-                padding: isMobile ? "0 10px" : "0 20px",
-                fontSize: isMobile ? 22 : 32,
-                cursor: "pointer",
-                color: "rgb(79, 25, 36)",
-                fontWeight: "900",
-                height: "100%",
-                transition: "background-color 0.3s ease",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "rgb(255, 220, 180)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = "rgb(225, 198, 153)")
-              }
-            >
-              🔍
-            </button>
-          </div>
+        {/* Bouton recherche */}
+        <button
+          onClick={handleSearch}
+          style={{
+            backgroundColor: "rgb(225, 198, 153)",
+            border: "none",
+            padding: isMobile ? "0 10px" : "0 20px",
+            fontSize: isMobile ? 22 : 32,
+            cursor: "pointer",
+            color: "rgb(79, 25, 36)",
+            fontWeight: "900",
+            height: "100%",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor = "rgb(255, 220, 180)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.backgroundColor = "rgb(225, 198, 153)")
+          }
+        >
+          🔍
+        </button>
+      </div>
 
-          {/* Trois blocs en dessous */}
+      {/* Trois blocs en dessous */}
+      <div
+        style={{
+          display: isMobile ? "block" : "flex",
+          paddingTop: isMobile ? 0 : 40,
+          gap: gapBlocks,
+          maxWidth: isMobile ? "100%" : 1400, // largeur barre nav pc
+          width: "100%",
+          justifyContent: "center",
+          margin: "0 auto",
+          flexWrap: "nowrap", // pas de wrapping pour garder en ligne
+          zIndex: 2,
+          position: "relative",
+        }}
+      >
+        {[1, 2, 3].map((_, i) => (
           <div
+            key={i}
             style={{
-              display: isMobile ? "block" : "flex",
-              gap: gapBlocks,
-              maxWidth: isMobile ? "100%" : 1800, // largeur barre nav pc
-              width: "100%",
-              marginTop: isMobile ? 0 : 80,
-              justifyContent: "center",
-              margin: "0 auto",
-              flexWrap: "nowrap", // pas de wrapping pour garder en ligne
+              flex: isMobile ? "unset" : "0 1 800px", // max width 800px en desktop
+              maxHeight: isMobile ? 1800 : "none", // max height mobile
+              minHeight: isMobile ? blockHeight : 400,
+              backgroundColor: "rgb(79, 25, 36)",
+              borderRadius: 10,
+              marginBottom: isMobile ? 20 : 0,
+              padding: 20, // padding pour contenu à l'intérieur
+              boxSizing: "border-box",
               zIndex: 2,
               position: "relative",
             }}
-          >
-            {[1, 2, 3].map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  flex: isMobile ? "unset" : "0 1 800px", // max width 800px en desktop
-                  maxHeight: isMobile ? 1800 : "none", // max height mobile
-                  minHeight: isMobile ? blockHeight : 600,
-                  backgroundColor: "rgb(79, 25, 36)",
-                  borderRadius: 10,
-                  marginBottom: isMobile ? 20 : 0,
-                  padding: 20, // padding pour contenu à l'intérieur
-                  boxSizing: "border-box",
-                  zIndex: 2,
-                  position: "relative",
-                }}
-              />
-            ))}
-          </div>
+          />
+        ))}
+      </div>
         </div>
       </div>
 
@@ -366,26 +366,26 @@ export default function Home() {
         </div>
 
         {/* Bas de la barre - Mon compte */}
-        <div
-          style={{
-            backgroundColor: "#fff",
-            color: "#4F1924",
-            padding: "12px 16px",
-            marginTop: 20,
-            marginRight: 0,
-            cursor: "pointer",
-            fontWeight: "bold",
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f7e9e2")}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fff")}
-        >
-          <CgProfile size={28} />
-          {menuOpen && <span>Mon compte</span>}
-        </div>
+      <div
+        onClick={() => navigate("/login")}
+        style={{
+          backgroundColor: "#fff",
+          color: "#4F1924",
+          padding: "12px 16px",
+          marginTop: 20,
+          cursor: "pointer",
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          transition: "background-color 0.3s ease",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f7e9e2")}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fff")}
+      >
+        <CgProfile size={28} />
+        {menuOpen && <span>Mon compte</span>}
+      </div>
       </aside>
     )}
 
