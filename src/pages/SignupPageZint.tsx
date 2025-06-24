@@ -28,7 +28,7 @@ export default function SignupPage() {
           🏠 Accueil
         </button>
 
-        <h1 style={{ ...titleStyle, marginTop: 50 }}>ZINT.LOL</h1>
+        <h1 style={titleStyle}>ZINT.LOL</h1>
         <p style={subtitleStyle}>Create your account</p>
 
         <form onSubmit={handleSubmit} style={formStyle}>
@@ -114,7 +114,6 @@ const homeButtonStyle = {
   fontSize: 16,
   cursor: "pointer",
   textDecoration: "underline",
-  marginBottom: "80px",
 };
 
 const titleStyle: React.CSSProperties = { fontSize: 48, margin: "0 0 10px", textAlign: "left" };
