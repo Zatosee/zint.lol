@@ -218,7 +218,7 @@ export default function Home() {
           type="text"
           value={pseudo}
           onChange={(e) => setPseudo(e.target.value)}
-          placeholder="Rechercher un joueur"
+          placeholder="Seek a summoner name..."
           style={{
             flex: 1,
             padding: isMobile ? "0 16px" : "0 30px",
@@ -227,7 +227,6 @@ export default function Home() {
             outline: "none",
             height: "100%",
             color: "#ffffff",
-            backgroundColor: "transparent",
             fontFamily: "anton, sans-serif",
           }}
         />
@@ -248,14 +247,8 @@ export default function Home() {
             height: "100%",
             transition: "background-color 0.3s ease",
           }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "rgb(255, 220, 180)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "rgb(225, 198, 153)")
-          }
         >
-          🔍
+          →
         </button>
       </div>
 
