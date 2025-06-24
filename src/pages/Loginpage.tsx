@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepConnected, setKeepConnected] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,19 +86,6 @@ const boxStyle = {
   color: "#fff",
   fontFamily: "anton, sans-serif",
   position: "relative" as const,
-};
-
-const homeButtonStyle = {
-  position: "absolute" as const,
-  top: 15,
-  left: 15,
-  backgroundColor: "transparent",
-  border: "none",
-  color: "#4ea1ff",
-  fontWeight: "bold",
-  fontSize: 16,
-  cursor: "pointer",
-  textDecoration: "underline",
 };
 
 const titleStyle: React.CSSProperties = { fontSize: 48, margin: "0 0 10px", textAlign: "left" };
