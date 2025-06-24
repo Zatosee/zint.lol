@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import yunara from "../assets/yunara.png";
@@ -7,10 +7,16 @@ import { AiOutlineBarChart } from "react-icons/ai";
 import { GiTargetPrize, GiPodiumWinner } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pseudo, setPseudo] = useState("");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [selectedRegion, setSelectedRegion] = useState("EUW");
+  const [regionMenuOpen, setRegionMenuOpen] = useState(false);
+  const regionRef = useRef<HTMLDivElement | null>(null);
+
+  const regions = ["EUW", "EUNE", "NA", "KR", "LAN", "LAS", "OCE", "TR", "RU", "JP"];
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -18,12 +24,22 @@ export default function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = windowWidth < 768;
+  useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (regionRef.current && !regionRef.current.contains(event.target as Node)) {
+      setRegionMenuOpen(false);
+    }
+  };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
   const navigate = useNavigate();
-  const logoWidth = isMobile ? 80 : 200;
-  const fontSize = isMobile ? 48 : 156;
+  const isMobile = windowWidth < 768;
+  const logoWidth = isMobile ? 80 : 140;
+  const fontSize = isMobile ? 48 : 128;
   const blockHeight = isMobile ? 150 : 220;
-  const searchHeight = isMobile ? 40 : 80;
+  const searchHeight = isMobile ? 40 : 50;
   const gapBlocks = isMobile ? 20 : 80;
   const paddingOverlay = isMobile ? "20px 10px" : "40px 20px";
 
@@ -99,7 +115,7 @@ export default function Home() {
               ZINT.
               <span
                 style={{
-                  color: "rgb(225, 198, 153)",
+                  color: "rgb(255, 255, 255)",
                   transition: "color 0.3s ease",
                 }}
               >
@@ -115,8 +131,8 @@ export default function Home() {
           alignItems: "center",
           backgroundColor: "rgba(79, 25, 36, 0.85)",
           borderRadius: 12,
-          overflow: "hidden",
-          maxWidth: 1200,
+          overflow: "visible",
+          maxWidth: 800,
           width: "100%",
           height: searchHeight,
           marginBottom: 40,
@@ -124,34 +140,78 @@ export default function Home() {
         }}
       >
         {/* Bloc Région */}
-        <div
-          style={{
-            backgroundColor: "rgb(225, 198, 153)",
-            color: "rgb(79, 25, 36)",
-            fontWeight: "700",
-            padding: isMobile ? "0 16px" : "0 30px", // plus large en desktop
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            userSelect: "none",
-            fontFamily: "anton, sans-serif",
-            fontSize: isMobile ? 16 : 28, // plus gros en desktop
-            borderTopLeftRadius: 12,
-            borderBottomLeftRadius: 12,
-            borderRight: "1px solid rgba(79, 25, 36, 0.3)",
-            transition: "background-color 0.3s ease",
-            whiteSpace: "nowrap",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "rgb(255, 220, 180)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "rgb(225, 198, 153)")
-          }
-        >
-          EUW
-        </div>
+      {/* Sélecteur de région cliquable */}
+      <div
+        ref={regionRef}
+        style={{
+          position: "relative",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          cursor: "pointer",
+          userSelect: "none",
+          fontFamily: "anton, sans-serif",
+          fontSize: isMobile ? 16 : 28,
+          backgroundColor: "rgb(255, 255, 255)",
+          color: "rgb(79, 25, 36)",
+          fontWeight: "700",
+          padding: isMobile ? "0 16px" : "0 30px",
+          borderTopLeftRadius: 12,
+          borderBottomLeftRadius: 12,
+          borderRight: "1px solid rgba(79, 25, 36, 0.3)",
+          transition: "background-color 0.3s ease",
+          whiteSpace: "nowrap",
+        }}
+
+      >
+        {selectedRegion}
+
+        {regionMenuOpen && (
+          <div
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              backgroundColor: "rgb(255, 255, 255)",
+              border: "1px solid rgba(79, 25, 36, 0.3)",
+              borderRadius: "0 0 12px 12px",
+              zIndex: 99,
+              width: "100%",
+              fontSize: isMobile ? 16 : 24,
+              boxShadow: "0px 6px 10px rgba(0,0,0,0.2)",
+            }}
+          >
+            {regions.map((region) => (
+              <div
+                key={region}
+                onClick={() => {
+                  setSelectedRegion(region);
+                  setRegionMenuOpen(false);
+                }}
+                style={{
+                  padding: isMobile ? "6px 12px" : "10px 20px",
+                  borderTop: "1px solid rgba(79, 25, 36, 0.1)",
+                  backgroundColor: region === selectedRegion ? "rgb(255, 255, 255)" : "inherit",
+                  color: "rgb(79, 25, 36)",
+                  fontWeight: "700",
+                  cursor: "pointer",
+                  transition: "background-color 0.2s ease",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "rgb(255, 255, 255)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor =
+                    region === selectedRegion ? "rgb(255, 255, 255)" : "inherit")
+                }
+              >
+                {region}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
 
         {/* Input texte */}
         <input
@@ -166,7 +226,7 @@ export default function Home() {
             fontSize: isMobile ? 18 : 28, // plus grand en desktop
             outline: "none",
             height: "100%",
-            color: "#fff",
+            color: "#ffffff",
             backgroundColor: "transparent",
             fontFamily: "anton, sans-serif",
           }}
@@ -176,8 +236,10 @@ export default function Home() {
         <button
           onClick={handleSearch}
           style={{
-            backgroundColor: "rgb(225, 198, 153)",
+            backgroundColor: "rgb(255, 255, 255)",
             border: "none",
+            borderRadius: "0 12px 12px 0",
+            display: "flex",
             padding: isMobile ? "0 10px" : "0 20px",
             fontSize: isMobile ? 22 : 32,
             cursor: "pointer",
@@ -203,7 +265,7 @@ export default function Home() {
           display: isMobile ? "block" : "flex",
           paddingTop: isMobile ? 0 : 40,
           gap: gapBlocks,
-          maxWidth: isMobile ? "100%" : 1400, // largeur barre nav pc
+          maxWidth: isMobile ? "100%" : 1200, // largeur barre nav pc
           width: "100%",
           justifyContent: "center",
           margin: "0 auto",
