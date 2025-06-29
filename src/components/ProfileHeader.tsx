@@ -1,6 +1,16 @@
-export function ProfileHeader({ profileImage, username, rank, mainChampion }) {
+
+import React from "react";
+
+type ProfileHeaderProps = {
+  profileImage: string;
+  username: string;
+  rank: string;
+  mainChampion: string;
+};
+
+export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileImage, username, rank, mainChampion }) => {
   return (
-    <div className="flex items-center gap-4 border-b border-gray-700 pb-6">
+    <div className="flex items-center gap-6 border-b border-gray-700 pb-6">
       <img
         src={profileImage}
         alt={`${username} Icon`}
@@ -12,4 +22,4 @@ export function ProfileHeader({ profileImage, username, rank, mainChampion }) {
       </div>
     </div>
   );
-}
+};
