@@ -1,16 +1,10 @@
+import Header from "../components/Header";
+
 export default function Profile() {
   return (
     <div className="min-h-screen bg-[#0b0f1a] text-white p-6 md:px-12">
-      {/* HEADER */}
-      <header className="flex justify-between items-center py-4">
-        <h1 className="text-xl font-bold text-cyan-400">Zint.lol</h1>
-        <nav className="space-x-4 text-sm">
-          <a href="#" className="hover:text-cyan-400">Tier List</a>
-          <a href="#" className="hover:text-cyan-400">Champions</a>
-          <a href="#" className="hover:text-cyan-400">Statistiques</a>
-        </nav>
-      </header>
-
+      <Header/>
+      
       {/* PROFILE HEADER */}
       <div className="flex items-center gap-4 border-b border-gray-700 pb-4">
         <img

@@ -1,8 +1,7 @@
 export default function Footer() {
   return (
-    <footer>
-      <div style={{ backgroundColor: "#2b0e15", height: 20 }} />
-      <div style={{ backgroundColor: "#4F1924", height: 80 }} />
-    </footer>
+      <footer className="text-center text-xs text-gray-500 py-4" style={{ backgroundColor: "#111a22" }}>
+        © 2025 Outplayed Inc. | Données inspirées de Riot Games
+      </footer>
   );
 }
