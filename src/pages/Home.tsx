@@ -1,17 +1,10 @@
 import bgStars from '../assets/bg-stars.png'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import MetaTierList from '../components/MetaTierList';
+import ChampionSpotlight from '../components/ChampionSpotlight';
 
 export default function Home() {
-  const metaData = [
-    { champion: "Kayn", role: "Mid", tier: "S-Tier", winrate: "52.7%", color: "text-green-400" },
-    { champion: "Syndra", role: "Top", tier: "B-Tier", winrate: "52.7%", color: "text-yellow-400" },
-    { champion: "Xayah", role: "Jungle", tier: "A-Tier", winrate: "52.7%", color: "text-blue-400" },
-    { champion: "Yuumi", role: "Supp", tier: "D-Tier", winrate: "44.7%", color: "text-red-400" },
-    { champion: "Warwick", role: "Top", tier: "B-Tier", winrate: "52.7%", color: "text-yellow-400" },
-    { champion: "Leona", role: "Mid", tier: "S-Tier", winrate: "52.7%", color: "text-green-400" },
-  ];
-
   return (
     <div className="min-h-screen bg-[#0b0f1a] text-white font-sans">
       <Header />
@@ -25,96 +18,35 @@ export default function Home() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Découvrez votre niveau.<br />Maîtrisez vos champions.
           </h2>
-          <button className="mt-6 px-6 py-3 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition">
+          <button className="mt-6 px-6 py-3 bg-[#00D0FF] text-black font-semibold rounded-full hover:bg-cyan-300 transition">
             Analyser mon profil
           </button>
         </div>
       </section>
 
-      {/* CONTENU PRINCIPAL CENTRÉ ET LIMITÉ EN LARGEUR */}
-      <main className="max-w-[1200px] mx-auto px-6">
+      <main className="max-w-[1200px] mx-auto px-6 py-10 space-y-10">
         {/* META TIER LIST */}
-        <section className="bg-[#121827] p-6 text-sm rounded-md my-6">
-          <h3 className="text-lg font-bold text-white mb-4">Meta Tier List</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[0, 1].map((tableIndex) => (
-              <table
-                key={tableIndex}
-                className="w-full text-left border border-gray-700 rounded-md overflow-hidden"
-              >
-                <thead className="text-cyan-400 bg-[#1c2433]">
-                  <tr>
-                    <th className="px-3 py-2">Champ</th>
-                    <th>Lane</th>
-                    <th>Tier</th>
-                    <th>%WR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {metaData
-                    .slice(tableIndex * 3, tableIndex * 3 + 3)
-                    .map((champ, index) => (
-                      <tr key={index} className="hover:bg-[#1c2433]">
-                        <td className="px-3 py-2 flex items-center gap-2">
-                          <img
-                            src={`https://ddragon.leagueoflegends.com/cdn/14.12.1/img/champion/${champ.champion}.png`}
-                            alt={champ.champion}
-                            className="w-6 h-6 rounded"
-                          />
-                          {champ.champion}
-                        </td>
-                        <td>{champ.role}</td>
-                        <td className={champ.color}>{champ.tier}</td>
-                        <td>{champ.winrate}</td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            ))}
-          </div>
-        </section>
+        <MetaTierList />
 
         {/* CHAMPION SPOTLIGHT */}
-        <section className="bg-[#101623] p-6 rounded-md">
-          <h3 className="text-lg font-bold text-white mb-4">Champion Spotlight</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["Kayn", "Syndra", "Gwen", "LeeSin"].map((champ) => (
-              <div key={champ} className="bg-[#1c2433] p-3 rounded">
-                <div className="w-full h-40 bg-[#0b0f1a] rounded flex items-center justify-center overflow-hidden">
-                  <img
-                    src={`https://ddragon.leagueoflegends.com/cdn/14.12.1/img/champion/${champ}.png`}
-                    alt={champ}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="text-white text-sm text-center mt-2">
-                  <p className="font-bold">{champ}</p>
-                  <p className="text-xs">
-                    WR 64.23%<br />
-                    PR 11.98%
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <ChampionSpotlight />
 
         {/* ACTION ICONS */}
-        <section className="py-6 grid grid-cols-2 md:grid-cols-4 text-center text-cyan-400 text-sm">
+        <section className="grid grid-cols-2 md:grid-cols-4 text-center text-[#00D0FF] text-sm gap-6">
           <div className="flex flex-col items-center gap-2">
-            📊
+            <span className="text-2xl">📊</span>
             <p>Statistiques avancées</p>
           </div>
           <div className="flex flex-col items-center gap-2">
-            🛠️
+            <span className="text-2xl">🛠️</span>
             <p>Recommandation de builds</p>
           </div>
           <div className="flex flex-col items-center gap-2">
-            🆚
+            <span className="text-2xl">🆚</span>
             <p>Contre-champions</p>
           </div>
           <div className="flex flex-col items-center gap-2">
-            🕓
+            <span className="text-2xl">🕓</span>
             <p>Historique de performances</p>
           </div>
         </section>
