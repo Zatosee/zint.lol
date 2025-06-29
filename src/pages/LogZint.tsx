@@ -1,23 +1,40 @@
 import { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../api/supabaseClient";
 
 export default function LoginZint() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepConnected, setKeepConnected] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: Ajouter login Supabase ici
-    console.log("Login", { email, password, keepConnected });
-    // Exemple : navigate vers dashboard après login réussi
-    // navigate("/dashboard");
+    setErrorMsg("");
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setErrorMsg(error.message);
+      return;
+    }
+
+    if (data.session) {
+      // Session créée, connexion réussie
+      // Gérer la persistance selon keepConnected (optionnel, Supabase gère ça automatiquement)
+      navigate("/dashboard"); // ou la page d’accueil privée
+    } else {
+      setErrorMsg("Erreur de connexion : session introuvable");
+    }
   };
 
   return (
     <div style={containerStyle}>
       <div style={boxStyle}>
-
         <h1 style={titleStyle}>ZINT.LOL</h1>
         <p style={subtitleStyle}>Welcome back to zint.lol</p>
 
@@ -29,6 +46,7 @@ export default function LoginZint() {
             onChange={(e) => setEmail(e.target.value)}
             required
             style={inputStyle}
+            autoComplete="email"
           />
           <input
             type="password"
@@ -37,6 +55,7 @@ export default function LoginZint() {
             onChange={(e) => setPassword(e.target.value)}
             required
             style={inputStyle}
+            autoComplete="current-password"
           />
           <div style={optionsStyle}>
             <label style={{ cursor: "pointer" }}>
@@ -53,13 +72,17 @@ export default function LoginZint() {
             </a>
           </div>
 
-          <button type="submit" style={buttonStyle}>Se connecter</button>
+          <button type="submit" style={buttonStyle}>
+            Se connecter
+          </button>
         </form>
+
+        {errorMsg && <p style={{ color: "red", marginTop: 10 }}>{errorMsg}</p>}
 
         <p style={switchTextStyle}>
           Tu n'as pas encore de compte?{" "}
           <Link to="/signup" style={linkStyle}>
-            Creer compte
+            Créer compte
           </Link>
         </p>
       </div>

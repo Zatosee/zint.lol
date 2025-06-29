@@ -1,451 +1,136 @@
-import { useState, useEffect, useRef } from "react";
-import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
-import yunara from "../assets/yunara.png";
-import logo from "../assets/logo.png";
-import { AiOutlineBarChart } from "react-icons/ai";
-import { GiTargetPrize, GiPodiumWinner } from "react-icons/gi";
-import { CgProfile } from "react-icons/cg";
-
+import React from "react";
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [pseudo, setPseudo] = useState("");
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [selectedRegion, setSelectedRegion] = useState("EUW");
-  const [regionMenuOpen, setRegionMenuOpen] = useState(false);
-  const regionRef = useRef<HTMLDivElement | null>(null);
-
-  const regions = ["EUW", "EUNE", "NA", "KR", "LAN", "LAS", "OCE", "TR", "RU", "JP"];
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (regionRef.current && !regionRef.current.contains(event.target as Node)) {
-      setRegionMenuOpen(false);
-    }
-  };
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
-
-  const navigate = useNavigate();
-  const isMobile = windowWidth < 768;
-  const logoWidth = isMobile ? 80 : 140;
-  const fontSize = isMobile ? 48 : 128;
-  const blockHeight = isMobile ? 150 : 220;
-  const searchHeight = isMobile ? 40 : 50;
-  const gapBlocks = isMobile ? 20 : 80;
-  const paddingOverlay = isMobile ? "20px 10px" : "40px 20px";
-
-  const handleSearch = () => {
-    console.log("Recherche pour :", pseudo);
-  };
-
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <Header onToggleMenu={() => setMenuOpen(!menuOpen)} />
+    <div className="min-h-screen bg-[#0b0f1a] text-white font-sans">
+      {/* HEADER */}
+      <header className="flex justify-between items-center px-6 py-4 bg-black bg-opacity-40">
+        <h1 className="text-xl font-bold text-cyan-400">Zint.lol</h1>
+        <nav className="space-x-6 text-sm">
+          <a href="#" className="hover:text-cyan-400">Tier List</a>
+          <a href="#" className="hover:text-cyan-400">Champions</a>
+          <a href="#" className="hover:text-cyan-400">Statistiques</a>
+        </nav>
+      </header>
 
-      <div style={{ position: "relative", flex: 1, overflow: "hidden" }}>
-        {/* Image de fond */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `url(${yunara})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            zIndex: 0,
-          }}
-        />
-
-        {/* Overlay flouté et sombre */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: paddingOverlay,
-            color: "#fff",
-          }}
-        >
-          {/* Logo + Titre alignés */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              gap: 20,
-              marginBottom: 40,
-              userSelect: "none",
-            }}
-          >
-            <img
-              src={logo}
-              alt="Logo ZINT.LOL"
-              style={{ width: logoWidth, height: "auto", objectFit: "contain" }}
-            />
-            <h1
-              style={{
-                fontSize: fontSize,
-                fontWeight: "900",
-                margin: 0,
-                padding: 0,
-                lineHeight: 1,
-                display: "flex",
-                alignItems: "flex-end",
-                fontFamily: "anton, sans-serif",
-                color: "rgba(79, 25, 36, 0.85)",
-                WebkitTextStroke: "0.7px rgb(43, 14, 21)",
-                cursor: "default",
-                textShadow: `3px 3px 6px rgba(43, 14, 21, 0.9), 0 0 8px rgba(150, 80, 90, 0.7), 0 0 15px rgba(150, 80, 90, 0.5)`,
-              }}
-            >
-              ZINT.
-              <span
-                style={{
-                  color: "rgb(255, 255, 255)",
-                  transition: "color 0.3s ease",
-                }}
-              >
-                LOL
-              </span>
-            </h1>
-          </div>
-
-          {/* Barre de recherche */}
-          <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "rgba(79, 25, 36, 0.85)",
-          borderRadius: 12,
-          overflow: "visible",
-          maxWidth: 800,
-          width: "100%",
-          height: searchHeight,
-          marginBottom: 40,
-          boxShadow: "0 4px 10px rgba(79, 25, 36, 0.6)",
-        }}
-      >
-        {/* Bloc Région */}
-      {/* Sélecteur de région cliquable */}
-      <div
-        ref={regionRef}
-        style={{
-          position: "relative",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer",
-          userSelect: "none",
-          fontFamily: "anton, sans-serif",
-          fontSize: isMobile ? 16 : 28,
-          backgroundColor: "rgb(255, 255, 255)",
-          color: "rgb(79, 25, 36)",
-          fontWeight: "700",
-          padding: isMobile ? "0 16px" : "0 30px",
-          borderTopLeftRadius: 12,
-          borderBottomLeftRadius: 12,
-          borderRight: "1px solid rgba(79, 25, 36, 0.3)",
-          transition: "background-color 0.3s ease",
-          whiteSpace: "nowrap",
-        }}
-
-      >
-        {selectedRegion}
-
-        {regionMenuOpen && (
-          <div
-            style={{
-              position: "absolute",
-              top: "100%",
-              left: 0,
-              backgroundColor: "rgb(255, 255, 255)",
-              border: "1px solid rgba(79, 25, 36, 0.3)",
-              borderRadius: "0 0 12px 12px",
-              zIndex: 99,
-              width: "100%",
-              fontSize: isMobile ? 16 : 24,
-              boxShadow: "0px 6px 10px rgba(0,0,0,0.2)",
-            }}
-          >
-            {regions.map((region) => (
-              <div
-                key={region}
-                onClick={() => {
-                  setSelectedRegion(region);
-                  setRegionMenuOpen(false);
-                }}
-                style={{
-                  padding: isMobile ? "6px 12px" : "10px 20px",
-                  borderTop: "1px solid rgba(79, 25, 36, 0.1)",
-                  backgroundColor: region === selectedRegion ? "rgb(255, 255, 255)" : "inherit",
-                  color: "rgb(79, 25, 36)",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                  transition: "background-color 0.2s ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = "rgb(255, 255, 255)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor =
-                    region === selectedRegion ? "rgb(255, 255, 255)" : "inherit")
-                }
-              >
-                {region}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-
-        {/* Input texte */}
-        <input
-          type="text"
-          value={pseudo}
-          onChange={(e) => setPseudo(e.target.value)}
-          placeholder="Seek a summoner name..."
-          style={{
-            flex: 1,
-            padding: isMobile ? "0 16px" : "0 30px",
-            border: "none",
-            fontSize: isMobile ? 18 : 28, // plus grand en desktop
-            outline: "none",
-            height: "100%",
-            color: "#ffffff",
-            fontFamily: "anton, sans-serif",
-          }}
-        />
-
-        {/* Bouton recherche */}
-        <button
-          onClick={handleSearch}
-          style={{
-            backgroundColor: "rgb(255, 255, 255)",
-            border: "none",
-            borderRadius: "0 12px 12px 0",
-            display: "flex",
-            padding: isMobile ? "0 10px" : "0 20px",
-            fontSize: isMobile ? 22 : 32,
-            cursor: "pointer",
-            color: "rgb(79, 25, 36)",
-            fontWeight: "900",
-            height: "100%",
-            transition: "background-color 0.3s ease",
-          }}
-        >
-          →
+      {/* BANNER */}
+      <section className="flex flex-col items-center justify-center text-center bg-[url('/bg-stars.jpg')] bg-cover bg-center py-24 px-4">
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          Découvrez votre niveau.<br />Maîtrisez vos champions.
+        </h2>
+        <button className="mt-6 px-6 py-3 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition">
+          Analyser mon profil
         </button>
-      </div>
+      </section>
 
-      {/* Trois blocs en dessous */}
-      <div
-        style={{
-          display: isMobile ? "block" : "flex",
-          paddingTop: isMobile ? 0 : 40,
-          gap: gapBlocks,
-          maxWidth: isMobile ? "100%" : 1200, // largeur barre nav pc
-          width: "100%",
-          justifyContent: "center",
-          margin: "0 auto",
-          flexWrap: "nowrap", // pas de wrapping pour garder en ligne
-          zIndex: 2,
-          position: "relative",
-        }}
-      >
-        {[1, 2, 3].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              flex: isMobile ? "unset" : "0 1 800px", // max width 800px en desktop
-              maxHeight: isMobile ? 1800 : "none", // max height mobile
-              minHeight: isMobile ? blockHeight : 400,
-              backgroundColor: "rgb(79, 25, 36)",
-              borderRadius: 10,
-              marginBottom: isMobile ? 20 : 0,
-              padding: 20, // padding pour contenu à l'intérieur
-              boxSizing: "border-box",
-              zIndex: 2,
-              position: "relative",
-            }}
-          />
-        ))}
-      </div>
+      {/* META TIER LIST */}
+      <section className="bg-[#121827] p-6 md:px-12 text-sm">
+        <h3 className="text-lg font-bold text-white mb-4">Meta Tier List</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <table className="w-full text-left border border-gray-700">
+            <thead className="text-cyan-400">
+              <tr>
+                <th className="px-3 py-2">Champ</th>
+                <th>Lane</th>
+                <th>Tier</th>
+                <th>%WR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="hover:bg-[#1c2433]">
+                <td className="px-3 py-2">Kayn</td>
+                <td>Mid</td>
+                <td className="text-green-400">S-Tier</td>
+                <td>52.7%</td>
+              </tr>
+              <tr className="hover:bg-[#1c2433]">
+                <td className="px-3 py-2">Kayn</td>
+                <td>Top</td>
+                <td className="text-yellow-400">B-Tier</td>
+                <td>52.7%</td>
+              </tr>
+              <tr className="hover:bg-[#1c2433]">
+                <td className="px-3 py-2">Kayn</td>
+                <td>Jungle</td>
+                <td className="text-blue-400">A-Tier</td>
+                <td>52.7%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table className="w-full text-left border border-gray-700">
+            <thead className="text-cyan-400">
+              <tr>
+                <th className="px-3 py-2">Champ</th>
+                <th>Lane</th>
+                <th>Tier</th>
+                <th>%WR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="hover:bg-[#1c2433]">
+                <td className="px-3 py-2">Yummi</td>
+                <td>Supp</td>
+                <td className="text-red-400">D-Tier</td>
+                <td>44.7%</td>
+              </tr>
+              <tr className="hover:bg-[#1c2433]">
+                <td className="px-3 py-2">Kayn</td>
+                <td>Top</td>
+                <td className="text-yellow-400">B-Tier</td>
+                <td>52.7%</td>
+              </tr>
+              <tr className="hover:bg-[#1c2433]">
+                <td className="px-3 py-2">Kayn</td>
+                <td>Mid</td>
+                <td className="text-green-400">S-Tier</td>
+                <td>52.7%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
+      </section>
 
-
-    {/* Menu latéral */}
-    {isMobile ? (
-      // 📱 Menu mobile classique
-      <aside
-        style={{
-          position: "fixed",
-          top: 60,
-          right: menuOpen ? 0 : "-260px",
-          width: 260,
-          height: "calc(100% - 60px)",
-          backgroundColor: "#4F1924",
-          color: "#fff",
-          padding: 20,
-          transition: "right 0.3s ease",
-          zIndex: 10,
-          overflowY: "auto",
-        }}
-      >
-           {/* Logo site */}
-        
-
-        <h3
-          style={{
-            marginBottom: 20,
-            borderBottom: "1px solid #444",
-            paddingBottom: 10,
-          }}
-        >
-          Navigation
-        </h3>
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          <li style={{ padding: "10px 0", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-            <AiOutlineBarChart size={28} />
-            Statistiques
-          </li>
-          <li style={{ padding: "10px 0", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-            <GiTargetPrize size={28} />
-            Champions
-          </li>
-          <li style={{ padding: "10px 0", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-            <GiPodiumWinner size={28} />
-            Classement
-          </li>
-          <li
-            style={{
-              padding: "10px 0",
-              cursor: "pointer",
-              borderTop: "1px solid #444",
-              marginTop: 10,
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <CgProfile size={28} />
-            Compte
-          </li>
-        </ul>
-      </aside>
-    ) : (
-      // 🖥️ Sidebar desktop : réduite par défaut, s'agrandit au hover
-      <aside
-        onMouseEnter={() => setMenuOpen(true)}
-        onMouseLeave={() => setMenuOpen(false)}
-        style={{
-          position: "fixed",
-          top: 60,
-          right: 0,
-          height: "calc(100% - 60px)",
-          width: menuOpen ? 220 : 60,
-          backgroundColor: "#4F1924",
-          color: "#fff",
-          padding: menuOpen ? 20 : "0px",
-          transition: "width 0.3s ease",
-          zIndex: 10,
-          overflowX: "hidden",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between", // place le bloc compte en bas
-        }}
-      >
-       
-
-        {/* Haut de la barre */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 30,
-            alignItems: menuOpen ? "flex-start" : "center",
-          }}
-        >
-          
-   
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              cursor: "pointer",
-            }}
-          >
-            
-            <AiOutlineBarChart size={28} />
-            {menuOpen && <span>Statistiques</span>}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              cursor: "pointer",
-            }}
-          >
-            <GiTargetPrize size={28} />
-            {menuOpen && <span>Champions</span>}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              cursor: "pointer",
-            }}
-          >
-            <GiPodiumWinner size={28} />
-            {menuOpen && <span>Classement</span>}
-          </div>
+      {/* CHAMPION SPOTLIGHT */}
+      <section className="bg-[#101623] p-6 md:px-12">
+        <h3 className="text-lg font-bold text-white mb-4">Champion Spotlight</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {["Kayn", "Syndra", "Gwen", "Lee Sin"].map((champ) => (
+            <div key={champ} className="bg-[#1c2433] p-3 rounded">
+              <div className="bg-gray-800 h-32 mb-2 rounded">Image {champ}</div>
+              <div className="text-white text-sm">
+                <p className="font-bold">{champ}</p>
+                <p className="text-xs">WR 64.23%<br />PR 11.98%</p>
+              </div>
+            </div>
+          ))}
         </div>
+      </section>
 
-        {/* Bas de la barre - Mon compte */}
-      <div
-        onClick={() => navigate("/login")}
-        style={{
-          backgroundColor: "#fff",
-          color: "#4F1924",
-          padding: "12px 16px",
-          marginTop: 20,
-          cursor: "pointer",
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          transition: "background-color 0.3s ease",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f7e9e2")}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fff")}
-      >
-        <CgProfile size={28} />
-        {menuOpen && <span>Mon compte</span>}
-      </div>
-      </aside>
-    )}
+      {/* ACTION ICONS */}
+      <section className="bg-[#0d121d] py-6 grid grid-cols-2 md:grid-cols-4 text-center text-cyan-400 text-sm">
+        <div className="flex flex-col items-center gap-2">
+          📊
+          <p>Statistiques avancées</p>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          🛠️
+          <p>Recommandation de builds</p>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          🆚
+          <p>Contre-champions</p>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          🕓
+          <p>Historique de performances</p>
+        </div>
+      </section>
 
-      {/*<Footer />*/}
-      
+      {/* FOOTER */}
+      <footer className="text-center text-xs text-gray-500 py-4 bg-black bg-opacity-30">
+        © 2025 Outplayed Inc. | Données inspirées de Riot Games
+      </footer>
     </div>
   );
 }

@@ -24,9 +24,7 @@ export default function SignupPage() {
   };
 
   const homeButtonStyle = {
-    position: "absolute" as const,
     top: 15,
-    left: 15,
     backgroundColor: "transparent",
     border: "none",
     color: "#4ea1ff",
