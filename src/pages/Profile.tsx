@@ -1,5 +1,3 @@
-
-
 export default function Profile() {
   return (
     <div className="min-h-screen bg-[#0b0f1a] text-white p-6 md:px-12">
