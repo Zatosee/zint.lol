@@ -89,6 +89,7 @@ export async function getSummonerRank(summonerId: string) {
   try {
     const url = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${API_KEY}`;
     const response = await fetch(url);
+    console.log("URL called for rank:", url);
 
     if (!response.ok) {
       const err = await response.text();
@@ -106,4 +107,5 @@ export async function getSummonerRank(summonerId: string) {
     console.error("Error fetching summoner rank:", error);
     return null;  // en cas d'erreur de fetch, renvoie null
   }
+  
 }

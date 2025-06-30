@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { getAccountByRiotId } from "../api/riot";
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  onSearch?: (gameName: string, tagLine: string) => void;
+}
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [searchInput, setSearchInput] = useState("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -22,7 +26,14 @@ export default function SearchBar() {
       const account = await getAccountByRiotId(gameName.trim(), tagLine.trim());
       if (account) {
         setError(null);
-        navigate(`/profile/${gameName.trim()}/${tagLine.trim()}`);
+
+        if (onSearch) {
+          // Si onSearch est fourni par un parent → on l'appelle
+          onSearch(gameName.trim(), tagLine.trim());
+        } else {
+          // Sinon, comportement par défaut → navigate
+          navigate(`/profile/${gameName.trim()}/${tagLine.trim()}`);
+        }
       } else {
         setError("Pseudo introuvable.");
       }
@@ -32,7 +43,6 @@ export default function SearchBar() {
     }
   };
 
-  // Effet pour effacer le message après 5s
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
@@ -63,7 +73,6 @@ export default function SearchBar() {
         </button>
       </form>
 
-      {/* Bubble error message */}
       {error && (
         <div className="absolute top-full left-0 mt-1 bg-red-600 bg-opacity-50 text-white text-xs px-3 py-1 rounded shadow z-50">
           {error}
