@@ -3,28 +3,15 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MetaTierList from '../components/MetaTierList';
 import ChampionSpotlight from '../components/ChampionSpotlight';
+import SearchBar from '../components/SearchBar';
 import {ChartBarIcon,WrenchScrewdriverIcon,ShieldExclamationIcon,ClockIcon} from '@heroicons/react/24/solid';
-import { useState } from 'react';
-import Profile from '../pages/Profile';
-
-type SearchType = {
-  gameName: string;
-  tagLine: string;
-};
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
-  const [search, setSearch] = useState<SearchType | null>(null);
-
-  function handleSearch(gameName: string, tagLine: string) {
-    setSearch({ gameName, tagLine });
-  }
-
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[#0b0f1a] text-white font-sans">
-      <Header onSearch={handleSearch}/>
-      {search && (
-        <Profile gameName={search.gameName} tagLine={search.tagLine} />
-      )}
+      <Header/>
         <section
           className="w-full bg-cover bg-center py-24"
           style={{ backgroundImage: `url(${bgStars})` }}
@@ -33,6 +20,13 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
               Découvrez votre niveau.<br />Maîtrisez vos champions.
             </h2>
+            <div className="w-full max-w-md mx-auto mt-6">
+              <SearchBar
+                onSearch={(gameName, tagLine) => {
+                  navigate(`/profile/${gameName}/${tagLine}`);
+                }}
+              />
+            </div>
             <button className="mt-6 px-6 py-3 bg-[#00D0FF] text-black font-semibold rounded-full hover:bg-cyan-300 transition">
               Analyser mon profil
             </button>
