@@ -7,7 +7,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/:gameName/:tagLine" element={<Profile />} />
     </Routes>
   );
 }

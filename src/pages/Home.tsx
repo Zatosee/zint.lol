@@ -4,11 +4,27 @@ import Footer from '../components/Footer';
 import MetaTierList from '../components/MetaTierList';
 import ChampionSpotlight from '../components/ChampionSpotlight';
 import {ChartBarIcon,WrenchScrewdriverIcon,ShieldExclamationIcon,ClockIcon} from '@heroicons/react/24/solid';
+import { useState } from 'react';
+import Profile from '../pages/Profile';
+
+type SearchType = {
+  gameName: string;
+  tagLine: string;
+};
 
 export default function Home() {
+  const [search, setSearch] = useState<SearchType | null>(null);
+
+  function handleSearch(gameName: string, tagLine: string) {
+    setSearch({ gameName, tagLine });
+  }
+
   return (
     <div className="min-h-screen bg-[#0b0f1a] text-white font-sans">
-      <Header />
+      <Header onSearch={handleSearch}/>
+      {search && (
+        <Profile gameName={search.gameName} tagLine={search.tagLine} />
+      )}
         <section
           className="w-full bg-cover bg-center py-24"
           style={{ backgroundImage: `url(${bgStars})` }}
