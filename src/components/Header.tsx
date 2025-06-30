@@ -1,8 +1,11 @@
 import { UserIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="flex justify-between items-center px-6 py-4 bg-opacity-40" style={{ backgroundColor: "#111a22" }}>
       
@@ -14,7 +17,14 @@ export default function Header() {
       </Link>
       
       <div className="flex items-center gap-8">
-        <SearchBar />
+
+         <SearchBar
+          onSearch={(gameName, tagLine) => {
+            console.log("Recherche depuis Header :", gameName, tagLine);
+            navigate(`/profile/${gameName}/${tagLine}`);
+          }}
+        />
+
         <nav className="flex items-center space-x-6 text-sm">
           <Link to="#" className="hover:text-cyan-400">Tier List</Link>
           <Link to="#" className="hover:text-cyan-400">Champions</Link>

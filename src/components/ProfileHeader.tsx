@@ -12,6 +12,8 @@ export function ProfileHeader({
 }: ProfileHeaderProps) {
   return (
     <div className="grid grid-cols-[auto,1fr] gap-4 items-center border-b border-gray-700 pb-4">
+    
+
       {/* Colonne droite */}
       <div className="flex flex-col justify-center">
         {/* Ligne 1 : Summoner Name */}
@@ -47,5 +49,5 @@ export function ProfileHeader({
   );
 
   // Debug log for rank and mainChampion
-  console.log("Rank:", rank, "Main Champion:", mainChampion);
+  console.log(rank, mainChampion);
 }
